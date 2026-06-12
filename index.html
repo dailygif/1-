@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buket Custom Premium</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script type="text/javascript">
+        // 1. LINK MEDIA SOSIAL KAMU
+        const LINK_SOSMED = {
+            saweria:   "https://saweria.co/DailyGif",
+            instagram: "https://www.instagram.com/itsramor?igsh=MWRvbTVncW15bWtrMA%3D%3D&utm_source=qr",
+            youtube:   "https://youtube.com/@dailygifindonesia?si=XdV88Yxds6LqOmLS"
+        };
+
+        // 2. ASET BUKET BUNGA UTUH
+        const ASSET_BOUQUETS = [
+            // KOLEKSI A
+            { id: 'Matahari', name: 'Buket Matahari', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@1973fdb946a88f7a662577b64d3be8723c394db2/5E2D91EE-6C5B-4F10-8151-4C0973200D2C.png' },
+            { id: 'White Lily', name: 'Buket White Lily', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@a0162904e797c853127be7fd6686381c7130d6b8/339A36C1-65A7-46C5-A115-0453D7AFE8E4.png' },
+            { id: 'Elegant Rose', name: 'Elegant Rose', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@dfe7c674c3abcbd966641eb870b4b24e21453fe5/9B94CBC7-932D-473B-8A37-9E36CF02DB47.png' },
+            { id: 'Clasic Rose', name: 'Rose Clasic', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@dfe7c674c3abcbd966641eb870b4b24e21453fe5/49AF1632-A41A-4508-A17B-D51FE0FAC9FB.png' },
+            { id: 'Campuran', name: 'Buket Campuran', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@a0162904e797c853127be7fd6686381c7130d6b8/82EABDE7-41F9-4CC4-BC8F-638C1D48654B.png' },
+            { id: 'Tulip White & Pink', name: 'Tulip W&P', img: 'https://cdn.jsdelivr.net/gh/dailygif/sayang@85790c6be73311616dec26fba3d31ee9f9732b46/6F5F4352-4B96-4801-A63F-4DDDAA32D2AF.png' },
+            
+            // KOLEKSI B
+            { id: 'Tulip merah kuning', name: 'Tulip M&K', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/FD86678E-B28E-4092-836D-025EF0CB0FCE.png' },
+            { id: 'Brown Campur', name: 'Brown Campuran', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/E93DF109-FCB6-4D23-BD33-BFED4309C856.png' },
+            { id: 'Tulip Pink', name: 'Tulip Pink', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/C3D009CF-0FC6-41BF-9C50-3998C4983E5B.png' },
+            { id: 'Matahari Campuran', name: 'Matahari Campuran', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/80C3E394-4D04-44A7-BB3C-42060D43C724.png' },
+            { id: 'Tulip pink & kuning', name: 'Tulip P&K', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/7516E1F6-3D34-4E0C-86F9-9E14C5D11D7A.png' },
+            { id: 'Campuran 2', name: 'Campuran 2', img: 'https://cdn.jsdelivr.net/gh/dailygif/asri@610b95d418c15d278e5a41f22dc2d9fe0f609cec/38511526-C8F9-4DF4-BBF0-B0A88324B16B.png' }
+        ];
+
+        // 3. 7 PILIHAN KERTAS POLOS PREMIUM
+        const ASSET_PAPERS = [
+            { id: 'Classic', name: 'Classic Kraft', hex: '#f4ede2', text: '#5a4a3a' },
+            { id: 'Minimalist', name: 'Pure White', hex: '#ffffff', text: '#222222' },
+            { id: 'SoftPink', name: 'Soft Pink Card', hex: '#fff0f5', text: '#6b4f5b' },
+            { id: 'VintageSage', name: 'Sage Green', hex: '#e2ece9', text: '#3f514b' },
+            { id: 'OceanWarm', name: 'Soft Blue', hex: '#eaf2f8', text: '#2c4356' },
+            { id: 'SweetCream', name: 'Warm Cream', hex: '#fdf7e7', text: '#5d543f' },
+            { id: 'LilacMist', name: 'Soft Lilac', hex: '#f3eaf8', text: '#523f5e' }
+        ];
+
+        // 4. 7 PILIHAN WARNA KANVAS / DINDING
+        const ASSET_BACKGROUNDS = [
+            { id: 'Maroon', name: 'Merah Maroon', val: '#800020' },
+            { id: 'White', name: 'Putih Bersih', val: '#ffffff' },
+            { id: 'SoftPink', name: 'Warna Pink', val: '#fcdcd2' },
+            { id: 'Lavender', name: 'Lavender', val: '#e6e6fa' },
+            { id: 'Sage', name: 'Sage Green', val: '#cadbc8' },
+            { id: 'MidnightBlue', name: 'Midnight Blue', val: '#1e2a3a' },
+            { id: 'WarmTerracotta', name: 'Terracotta', val: '#c87a65' }
+        ];
+
+        // 5. 5 PILIHAN EFEK KELOPAK BUNGA GUGUR PREMIUM + 1 TANPA EFEK
+        const ASSET_EFFECTS = [
+            { id: 'rose', name: 'Mawar Merah', className: 'petal-rose', hex: '#b3002d' },
+            { id: 'sakura', name: 'Sakura Pink', className: 'petal-sakura', hex: '#ffb7c5' },
+            { id: 'sunflower', name: 'Kuaci Matahari', className: 'petal-sunflower', hex: '#ffd700' },
+            { id: 'whiterose', name: 'Mawar Putih', className: 'petal-whiterose', hex: '#ffffff' },
+            { id: 'goldleaf', name: 'Daun Emas', className: 'petal-gold', hex: '#d4af37' },
+            { id: 'none', name: 'Tanpa Efek', className: '', hex: '#eeeeee' }
+        ];
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,400;0,500;0,600;1,400&family=Inter:wght=300;400;500;600&display=swap');
+
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #faf8f6; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; position: fixed; top: 0; left: 0; }
+        
+        .bq-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #faf8f6; z-index: 9999; overflow: hidden; }
+
+        .bq-container { background: #ffffff; border-radius: 24px; padding: 30px 25px; width: 90%; max-width: 400px; max-height: 85vh; box-shadow: 0 30px 70px rgba(128, 0, 32, 0.03), 0 10px 30px rgba(0, 0, 0, 0.01); overflow-y: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; border: 1px solid rgba(218, 165, 32, 0.15); text-align: center; box-sizing: border-box; scrollbar-width: none; scroll-behavior: smooth; }
+        .bq-container::-webkit-scrollbar { display: none; }
+        
+        .bq-info-trigger { position: fixed; top: 25px; right: 25px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(128, 0, 32, 0.2); color: #800020; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.3s; z-index: 999999; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .bq-info-trigger:hover { background: #800020; color: #ffffff; border-color: #800020; transform: scale(1.05); }
+
+        .bq-progress-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; padding: 0 5px; }
+        .bq-progress-step { width: 22px; height: 22px; border-radius: 50%; background: #f5f0ed; color: #baaeaa; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 500; transition: all 0.4s ease; }
+        .bq-active-step { background: #800020 !important; color: #ffffff !important; box-shadow: 0 6px 15px rgba(128,0,32,0.15); font-weight: 600; }
+        .bq-progress-line { flex-grow: 1; height: 1px; background: #eadeb8; margin: 0 4px; opacity: 0.4; }
+        
+        .bq-section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; letter-spacing: -0.3px; margin-bottom: 6px; text-align: left; color: #800020; }
+        .bq-subtitle { font-size: 0.78rem; color: #8a7e7a; margin-bottom: 20px; text-align: left; line-height: 1.4; font-weight: 300; }
+        
+        .bq-grid-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 30px; }
+        .bq-item { border: 1px solid #f0e8e5; border-radius: 14px; padding: 10px; cursor: pointer; background: #fdfcfb; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-sizing: border-box; text-align: center; }
+        .bq-item.bq-selected-item { border-color: #c5a059 !important; background: #fffcf7 !important; box-shadow: 0 6px 15px rgba(197, 160, 89, 0.08); }
+        .bq-item img { width: 100%; height: 85px; object-fit: contain; border-radius: 10px; background: transparent; transition: transform 0.3s; }
+        .bq-item:hover img { transform: scale(1.04); }
+        .bq-item span { font-size: 0.72rem; font-weight: 500; display: block; margin-top: 6px; color: #6e625e; }
+        .bq-color-preview { width: 100%; height: 50px; border-radius: 10px; margin-bottom: 2px; border: 1px solid rgba(0,0,0,0.03); }
+        
+        .bq-input-field, .bq-textarea-field { width: 100%; padding: 14px; border: 1px solid #ede5e2; border-radius: 12px; margin-bottom: 12px; font-size: 0.82rem; box-sizing: border-box; background: #fdfcfb; outline: none; font-family: inherit; }
+        .bq-input-field:focus, .bq-textarea-field:focus { border-color: #800020; background: #ffffff; }
+        .bq-textarea-field { height: 90px; resize: none; }
+        
+        .bq-tab-btn { background: #fdfcfb; color: #7a6e6a; border: 1px solid #ede5e2; padding: 10px; width: 50%; border-radius: 10px; font-weight: 500; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; }
+        .bq-tab-btn.active-tab { background: #800020; color: #ffffff; border-color: #800020; box-shadow: 0 4px 10px rgba(128,0,32,0.15); }
+
+        .bq-nav-buttons { display: flex; justify-content: space-between; gap: 12px; margin-top: 15px; }
+        .bq-btn { padding: 12px 24px; border: none; border-radius: 50px; font-weight: 500; cursor: pointer; font-size: 0.82rem; transition: all 0.3s ease; box-sizing: border-box; }
+        .bq-back-btn { background: #ffffff; color: #7a6e6a; width: 48%; border: 1px solid #ede5e2; }
+        .bq-next-btn { background: #800020; color: #ffffff; width: 48%; box-shadow: 0 4px 12px rgba(128, 0, 32, 0.12); }
+        .bq-finish-btn { background: #800020; color: #ffffff; width: 100%; padding: 14px; font-size: 0.88rem; border-radius: 50px; border: none; font-weight: 500; cursor: pointer; box-shadow: 0 6px 20px rgba(128, 0, 32, 0.15); }
+        
+        /* FIX TOTAL POSISI TENGAH LAYAR UNTUK TABEL BUKET */
+        .bq-gift-showcase-box { width: 100%; max-width: 340px; display: block !important; flex-direction: unset; background: #ffffff; border-radius: 20px; overflow: hidden; border: 1px solid rgba(218, 165, 32, 0.2); margin: 0 auto 15px auto !important; box-sizing: border-box; float: none; clear: both; }
+        .bq-live-canvas { width: 100%; height: 340px; position: relative; display: flex; justify-content: center; align-items: flex-end; background: #fdfcfb; overflow: hidden; box-sizing: border-box; }
+        
+        .bq-layer-element { display: block; width: auto; height: auto; max-height: 85%; max-width: 85%; object-fit: contain; z-index: 5; position: relative; margin: 0 auto; bottom: 8px; filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.35)); -webkit-filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.35)); }
+        
+        .bq-canvas-watermark { position: absolute; bottom: 10px; right: 12px; font-size: 0.65rem; color: rgba(128, 0, 32, 0.4); font-weight: 600; z-index: 90; pointer-events: none;}
+        
+        .bq-petals-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; }
+        .bq-petal { position: absolute; opacity: 0.8; animation: flyPetal linear infinite; }
+        
+        .petal-rose { background: #b3002d; border-radius: 150% 0 150% 40%; }
+        .petal-sakura { background: #ffb7c5; border-radius: 50%; }
+        .petal-sunflower { background: #ffd700; border-radius: 20% 80%; border: 1px solid #b8860b; }
+        .petal-whiterose { background: #ffffff; border-radius: 150% 0 150% 40%; box-shadow: inset 0 0 4px rgba(0,0,0,0.1); }
+        .petal-gold { background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728); border-radius: 40% 80%; }
+        
+        .bq-letter-card-display { padding: 22px 20px; text-align: left; box-sizing: border-box; width: 100%; background-size: cover; background-position: center; border-top: 1px dashed rgba(218, 165, 32, 0.2); }
+        .display-to-class { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.25rem; margin-bottom: 8px; }
+        .display-msg-class { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.5; margin-bottom: 12px; min-height: 40px; white-space: pre-wrap; font-style: italic; }
+        .display-from-class { text-align: right; font-size: 0.65rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; }
+        
+        .bq-share-section { margin-top: 15px; background: #fffdfb; padding: 14px; border-radius: 14px; font-size: 0.78rem; word-break: break-all; border: 1px dashed #c5a059; color: #4a4240; text-align: left; }
+        .bq-hidden { display: none !important; }
+        
+        .bq-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(46, 39, 37, 0.4); display: flex; justify-content: center; align-items: center; z-index: 10005; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(4px); }
+        .bq-modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .bq-modal-card { background: #ffffff; width: 92%; max-width: 350px; border-radius: 20px; padding: 0 0 25px 0; box-shadow: 0 20px 50px rgba(0,0,0,0.15); border: 2px solid #800020; position: relative; box-sizing: border-box; overflow: hidden; pointer-events: auto; }
+        .bq-modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: #ffffff; background: #800020; font-weight: 600; padding: 16px; margin: 0 0 20px 0; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.05); position: relative; }
+        
+        .bq-modal-close { position: absolute; top: 50%; transform: translateY(-50%); right: 18px; font-size: 1.5rem; cursor: pointer; color: #ffffff; transition: opacity 0.2s; opacity: 0.8; z-index: 100; padding: 4px; line-height: 1; }
+        .bq-modal-close:hover { opacity: 1; }
+        
+        .bq-modal-narrative { font-size: 0.84rem; color: #524744; line-height: 1.6; text-align: justify; margin: 0 22px 25px 22px; font-weight: 300; }
+        .bq-modal-narrative p { margin: 0 0 12px 0; }
+        .bq-modal-narrative p:last-child { margin-bottom: 0; }
+        
+        .bq-social-group { display: flex; justify-content: center; gap: 16px; margin-top: 10px; }
+        .bq-social-link { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 10px rgba(0,0,0,0.04); text-decoration: none; box-sizing: border-box; overflow: hidden; background: #ffffff; border: 1px solid #ede5e2; }
+        .bq-social-link img { width: 22px; height: 22px; object-fit: contain; }
+        .bq-social-link:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.07); }
+
+        .bq-shortener-info { margin-top: 10px; font-size: 0.75rem; color: #6e625e; line-height: 1.4; border-top: 1px dashed rgba(197, 160, 89, 0.3); padding-top: 10px; }
+        .bq-alert-box { background: #fff5f5; border-left: 4px solid #b3002d; padding: 12px; border-radius: 8px; margin: 12px 0; font-weight: 600; color: #800020; font-size: 0.8rem; line-height: 1.4; }
+        
+        .bq-arrow-container { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 12px 0 4px 0; }
+        .bq-smooth-arrow { font-size: 1.6rem; color: #c5a059; line-height: 1; animation: smoothBounce 1.2s ease-in-out infinite; }
+        .bq-shortener-btn { display: block; text-align: center; text-decoration: none; background: #c5a059; color: #ffffff; padding: 12px; border-radius: 25px; font-size: 0.82rem; font-weight: 600; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3); transition: all 0.3s; border: 1px solid rgba(0,0,0,0.05); }
+
+        /* AREA BAWAH DI-HIDE DULU AGAR SCREEN BISA LOCK DI TENGAH */
+        #final-action-block, .bq-nav-buttons-h6 { display: none; }
+
+        @keyframes smoothBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+        
+        @keyframes flyPetal {
+            0% { transform: translateY(-30px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.85; }
+            90% { opacity: 0.85; }
+            100% { transform: translateY(350px) translateX(var(--sway-x, 0px)) rotate(var(--rot-deg, 360deg)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bq-wrapper">
+    <div class="bq-info-trigger" onclick="toggleInfoModal(true)">!</div>
+
+    <div id="info-modal" class="bq-modal-overlay" onclick="toggleInfoModal(false)">
+        <div class="bq-modal-card" onclick="event.stopPropagation()">
+            <div class="bq-modal-title">
+                Tentang DailyGift
+                <span class="bq-modal-close" onclick="toggleInfoModal(false)">&times;</span>
+            </div>
+            <div class="bq-modal-narrative">
+                <p>Halo! Saya pembuat platform buket digital ini. Website ini dibuat agar Anda dapat merangkai ungkapan cinta secara daring dengan tampilan yang elegan, rapi, dan penuh makna.</p>
+                <p>Semoga karya ini dapat menjadi wadah yang indah untuk menyampaikan perasaan Anda. Apabila Anda menyukainya and ingin mendukung pengembangan lebih lanjut, silakan kunjungi tautan resmi yang tertera di bawah. Terima kasih telah berkunjung! @itsramor</p>
+            </div>
+            <div class="bq-social-group">
+                <a id="modal-link-saweria" href="#" target="_blank" class="bq-social-link link-saweria" title="Dukungan Saweria"><img src="https://cdn.jsdelivr.net/gh/dailygif/asri@0f55ed1326fe393c35a7892fd0a8d3496243b6eb/645252C1-D3D0-4ABC-99E9-5691B3C78941.png" alt="Saweria"></a>
+                <a id="modal-link-instagram" href="#" target="_blank" class="bq-social-link link-instagram" title="Instagram"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram"></a>
+                <a id="modal-link-youtube" href="#" target="_blank" class="bq-social-link link-youtube" title="Channel YouTube"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bq-container" id="bq-main-container">
+        <div class="bq-progress-bar">
+            <div class="bq-progress-step bq-active-step" id="p-1">1</div>
+            <div class="bq-progress-line"></div><div class="bq-progress-step" id="p-2">2</div>
+            <div class="bq-progress-line"></div><div class="bq-progress-step" id="p-3">3</div>
+            <div class="bq-progress-line"></div><div class="bq-progress-step" id="p-4">4</div>
+            <div class="bq-progress-line"></div><div class="bq-progress-step" id="p-5">5</div>
+            <div class="bq-progress-line"></div><div class="bq-progress-step" id="p-6">6</div>
+        </div>
+
+        <div id="creator-view">
+            <div id="step-1" class="bq-step-content">
+                <h2 class="bq-section-title">Pilih Gaya Buket</h2>
+                <p class="bq-subtitle">Pilih satu desain buket bunga indah pilihanmu.</p>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button type="button" id="tab-btn-1" class="bq-tab-btn active-tab" onclick="gantiKoleksiBunga(1)">Koleksi A</button>
+                    <button type="button" id="tab-btn-2" class="bq-tab-btn" onclick="gantiKoleksiBunga(2)">Koleksi B</button>
+                </div>
+                <div class="bq-grid-options" id="bouquet-options"></div>
+                <div class="bq-nav-buttons" style="justify-content: flex-end;"><button type="button" class="bq-btn bq-next-btn" onclick="showStep(2)">Lanjut →</button></div>
+            </div>
+
+            <div id="step-2" class="bq-step-content bq-hidden">
+                <h2 class="bq-section-title">Pilih Kertas Surat</h2>
+                <p class="bq-subtitle">Tentukan latar belakang kartu kertas ucapan polos yang elegan.</p>
+                <div class="bq-grid-options" id="paper-options"></div>
+                <div class="bq-nav-buttons">
+                    <button type="button" class="bq-btn bq-back-btn" onclick="showStep(1)">← Kembali</button>
+                    <button type="button" class="bq-btn bq-next-btn" onclick="showStep(3)">Lanjut →</button>
+                </div>
+            </div>
+
+            <div id="step-3" class="bq-step-content bq-hidden">
+                <h2 class="bq-section-title">Tulis Pesan</h2>
+                <p class="bq-subtitle">Ungkapkan kata-kata indah yang ingin disampaikan.</p>
+                <input type="text" id="input-to" class="bq-input-field" placeholder="Untuk: Nama Penerima"/>
+                <textarea id="input-message" class="bq-textarea-field" placeholder="Tuliskan pesan manis di sini..."></textarea>
+                <input type="text" id="input-from" class="bq-input-field" placeholder="Dari: Nama Pengirim"/>
+                <div class="bq-nav-buttons">
+                    <button type="button" class="bq-btn bq-back-btn" onclick="showStep(2)">← Kembali</button>
+                    <button type="button" class="bq-btn bq-next-btn" onclick="showStep(4)">Lanjut →</button>
+                </div>
+            </div>
+
+            <div id="step-4" class="bq-step-content bq-hidden">
+                <h2 class="bq-section-title">Suasana Kanvas</h2>
+                <p class="bq-subtitle">Pilih warna dinding latar belakang untuk rumah buket (7 pilihan).</p>
+                <div class="bq-grid-options" id="bg-options"></div>
+                <div class="bq-nav-buttons">
+                    <button type="button" class="bq-btn bq-back-btn" onclick="showStep(3)">← Kembali</button>
+                    <button type="button" class="bq-btn bq-next-btn" onclick="showStep(5)">Lanjut →</button>
+                </div>
+            </div>
+
+            <div id="step-5" class="bq-step-content bq-hidden">
+                <h2 class="bq-section-title">Efek Kelopak Bunga</h2>
+                <p class="bq-subtitle">Pilih jenis efek kelopak gugur premium di sekelilingnya (5 varian premium).</p>
+                <div class="bq-grid-options" id="effect-options"></div>
+                <div class="bq-nav-buttons">
+                    <button type="button" class="bq-btn bq-back-btn" onclick="showStep(4)">← Kembali</button>
+                    <button type="button" class="bq-btn bq-next-btn" onclick="jalankanPratinjau()">Lanjut →</button>
+                </div>
+            </div>
+
+            <div id="step-6" class="bq-step-content bq-hidden">
+                <h2 class="bq-section-title">Pratinjau Buket</h2>
+                <p class="bq-subtitle">Berikut adalah tampilan visual premium buket kustom kamu.</p>
+                
+                <div class="bq-gift-showcase-box" id="capture-creator-target">
+                    <div class="bq-live-canvas" id="creator-preview-canvas">
+                        <div class="bq-petals-container" id="creator-petals"></div>
+                        <img src="" class="bq-layer-element" id="creator-bouquet-img" alt="Buket">
+                        <div class="bq-canvas-watermark">DailyGift_@itsramor</div>
+                    </div>
+                    
+                    <div id="preview-letter-card" class="bq-letter-card-display">
+                        <div id="preview-display-to" class="display-to-class"></div>
+                        <div id="preview-display-msg" class="display-msg-class"></div>
+                        <div id="preview-display-from" class="display-from-class"></div>
+                    </div>
+                </div>
+
+                <div id="final-action-block">
+                    <button type="button" class="bq-btn bq-finish-btn" onclick="buildAndGenerateLink()">Simpan &amp; Salin Tautan</button>
+                    
+                    <div id="share-output" class="bq-share-section bq-hidden">
+                        <p style="font-weight:700; margin-bottom:4px; color:#800020; font-size:0.85rem;">✔ LINK SUDAH DI-COPY!</p>
+                        <span id="link-text" style="color: #baaeaa; font-size: 0.68rem; display: block; margin-bottom: 8px; font-family: monospace;"></span>
+                        
+                        <div class="bq-alert-box">MASUKAN LINK PANJANG INI 
+KE DALAM WEB PEMENDEK
+ DI BAWAH !! AGAR LINK LEBIH 
+RAPIH SAAT DI KIRIM!</div>
+                        
+                        <div class="bq-shortener-info" id="scroll-target-guide">
+                            <div class="bq-arrow-container"><span class="bq-smooth-arrow">👇🏻</span></div>
+                            <a href="https://l8.nu/id/" target="_blank" class="bq-shortener-btn">Buka Web L8.nu Sekarang</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bq-nav-buttons bq-nav-buttons-h6" id="h6-back-btn-box">
+                    <button type="button" class="bq-btn bq-back-btn" onclick="showStep(5)">← Kembali</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="receiver-view" class="bq-hidden">
+            <div class="bq-gift-showcase-box" id="capture-receiver-target">
+                <div class="bq-live-canvas" id="canvas-view">
+                    <div class="bq-petals-container" id="receiver-petals"></div>
+                    <img src="" class="bq-layer-element" id="receiver-bouquet-img" alt="Buket">
+                    <div class="bq-canvas-watermark">DailyGift_@itsramor</div>
+                </div>
+                <div id="letter-card" class="bq-letter-card-display">
+                    <div id="display-to" class="display-to-class"></div>
+                    <div id="display-msg" class="display-msg-class"></div>
+                    <div id="display-from" class="display-from-class"></div>
+                </div>
+            </div>
+            <button type="button" class="bq-btn bq-finish-btn" style="background: #c5a059; margin-bottom: 12px;" onclick="unduhGambarbuket()">🎞 Simpan Sebagai Gambar</button>
+            <button type="button" class="bq-btn bq-finish-btn" style="background: rgba(128,0,32,0.05); color: #800020; border: 1px solid rgba(128,0,32,0.15);" onclick="resetToHome()">Buat Buket Kustom Sendiri</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    let userSelection = { bouquet: 'Matahari', paper: 'Classic', to: '', msg: '', from: '', bg: 'Maroon', fx: 'rose' };
+
+    window.onload = function() {
+        document.getElementById('modal-link-saweria').href = LINK_SOSMED.saweria;
+        document.getElementById('modal-link-instagram').href = LINK_SOSMED.instagram;
+        document.getElementById('modal-link-youtube').href = LINK_SOSMED.youtube;
+        gantiKoleksiBunga(1); 
+        initOptions('paper-options', ASSET_PAPERS, 'paper', true); 
+        initOptions('bg-options', ASSET_BACKGROUNDS, 'bg', false, true);
+        initOptions('effect-options', ASSET_EFFECTS, 'fx', false, false, true);
+        checkReceiverMode();
+    };
+
+    function gantiKoleksiBunga(bagian) {
+        const btn1 = document.getElementById('tab-btn-1');
+        const btn2 = document.getElementById('tab-btn-2');
+        let dataPotongan = bagian === 1 ? ASSET_BOUQUETS.slice(0, 6) : ASSET_BOUQUETS.slice(6, 12);
+        btn1.classList.toggle('active-tab', bagian === 1);
+        btn2.classList.toggle('active-tab', bagian === 2);
+        initOptions('bouquet-options', dataPotongan, 'bouquet');
+    }
+
+    function initOptions(containerId, dataset, type, isPaper = false, isBg = false, isFx = false) {
+        const container = document.getElementById(containerId);
+        if(!container) return; container.innerHTML = '';
+        dataset.forEach((item) => {
+            let div = document.createElement('div');
+            div.className = 'bq-item ' + (userSelection[type] === item.id ? 'bq-selected-item' : '');
+            if (isBg) div.innerHTML = '<div class="bq-color-preview" style="background:'+item.val+'"></div><span>'+item.name+'</span>';
+            else if (isFx) div.innerHTML = '<div class="bq-color-preview" style="background:'+item.hex+'; border-radius: 50%;"></div><span>'+item.name+'</span>';
+            else if (isPaper) div.innerHTML = '<div class="bq-color-preview" style="background:'+item.hex+'; border:1px solid rgba(0,0,0,0.08);"></div><span>'+item.name+'</span>';
+            else div.innerHTML = '<img src="'+item.img+'"/><span>'+item.name+'</span>';
+            div.onclick = function() {
+                this.parentElement.querySelectorAll('.bq-item').forEach(el => el.classList.remove('bq-selected-item'));
+                this.classList.add('bq-selected-item');
+                userSelection[type] = item.id;
+            };
+            container.appendChild(div);
+        });
+    }
+
+    function toggleInfoModal(show) { document.getElementById('info-modal').classList.toggle('active', show); }
+
+    function renderPremiumBouquet(imgId, bouquetId) {
+        const imgEl = document.getElementById(imgId);
+        if(!imgEl) return;
+        const selected = ASSET_BOUQUETS.find(x => x.id === bouquetId) || ASSET_BOUQUETS[0];
+        if(selected) {
+            imgEl.src = selected.img;
+            imgEl.style.display = 'block';
+        }
+    }
+
+    function showStep(stepNum) {
+        document.querySelectorAll('.bq-step-content').forEach(el => el.classList.add('bq-hidden'));
+        document.getElementById('step-' + stepNum).classList.remove('bq-hidden');
+        document.querySelectorAll('.bq-progress-step').forEach((el, idx) => el.classList.toggle('bq-active-step', idx < stepNum));
+        
+        const container = document.getElementById('bq-main-container');
+        if (container) {
+            if (stepNum === 6) {
+                // LOCK PERTAMA: Hilangkan tombol aksi & kunci total scroll
+                document.getElementById('final-action-block').style.display = 'none';
+                document.getElementById('h6-back-btn-box').style.display = 'none';
+                container.style.overflowY = 'hidden'; 
+                
+                // CRITICAL FIX: Paksa scroll meluncur ke tengah agar teks surat terbaca jelas saat mengetik
+                setTimeout(() => {
+                    container.scrollTop = 110; 
+                }, 50);
+            } else {
+                container.style.overflowY = 'auto';
+            }
+        }
+    }
+
+    function startPetalsEffect(containerId, effectId) {
+        const container = document.getElementById(containerId);
+        if(!container) return; container.innerHTML = ''; 
+        if(effectId === 'none') return; 
+        const selectedFx = ASSET_EFFECTS.find(x => x.id === effectId) || ASSET_EFFECTS[0];
+        for (let i = 0; i < 12; i++) { 
+            let petal = document.createElement('div');
+            petal.className = 'bq-petal ' + selectedFx.className;
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.width = petal.style.height = Math.random() * 6 + 7 + 'px';
+            petal.style.setProperty('--sway-x', (Math.random() * 50 - 25) + 'px');
+            petal.style.setProperty('--rot-deg', (Math.random() * 240 + 120) + 'deg');
+            petal.style.animationDuration = (Math.random() * 3 + 5.5) + 's'; 
+            petal.style.animationDelay = (Math.random() * -5) + 's';
+            container.appendChild(petal);
+        }
+    }
+
+    // LOCK & UNLOCK TIMING LOGIC
+    function triggerTypingEffect(elementId, text) {
+        const el = document.getElementById(elementId);
+        if(!el) return; el.innerText = ''; let i = 0;
+        const container = document.getElementById('bq-main-container');
+        
+        function type() { 
+            if (i < text.length) { 
+                el.innerText += text.charAt(i++); 
+                
+                // Tetap paksa scroll nahan di posisi tengah surat selama proses ketikan berjalan
+                if(container) container.scrollTop = 110;
+                
+                setTimeout(type, 35); 
+            } else {
+                // UNLOCK TOTAL: Teks selesai -> Hidupkan tombol & kembalikan kontrol gerak scroll bebas
+                document.getElementById('final-action-block').style.display = 'block';
+                document.getElementById('h6-back-btn-box').style.display = 'flex';
+                
+                if (container) {
+                    container.style.overflowY = 'auto'; 
+                    // Dorong halus layar ke bawah sedikit agar user sadar tombol simpan sudah muncul
+                    setTimeout(() => {
+                        container.scrollTo({ top: 180, behavior: 'smooth' });
+                    }, 150);
+                }
+            }
+        }
+        type();
+    }
+
+    function jalankanPratinjau() {
+        renderPremiumBouquet('creator-bouquet-img', userSelection.bouquet);
+        startPetalsEffect('creator-petals', userSelection.fx);
+        const card = document.getElementById('preview-letter-card');
+        const paper = ASSET_PAPERS.find(x => x.id === userSelection.paper) || ASSET_PAPERS[0];
+        card.style.backgroundImage = 'none'; card.style.backgroundColor = paper.hex; card.style.color = paper.text;
+        document.getElementById('preview-display-to').innerText = document.getElementById('input-to').value || 'Untuk Kamu';
+        document.getElementById('preview-display-from').innerText = document.getElementById('input-from').value || 'Dari Seseorang';
+        
+        document.getElementById('share-output').classList.add('bq-hidden');
+        
+        showStep(6); 
+        triggerTypingEffect('preview-display-msg', document.getElementById('input-message').value || 'Kirim pesan manis...');
+        document.getElementById('creator-preview-canvas').style.backgroundColor = (ASSET_BACKGROUNDS.find(x => x.id === userSelection.bg) || ASSET_BACKGROUNDS[0]).val;
+    }
+
+    function buildAndGenerateLink() {
+        const buildString = 'bq=' + encodeURIComponent(userSelection.bouquet) + '&pp=' + encodeURIComponent(userSelection.paper) + '&bg=' + encodeURIComponent(userSelection.bg) + '&fx=' + encodeURIComponent(userSelection.fx) + '&to=' + encodeURIComponent(document.getElementById('input-to').value || 'Untuk Kamu') + '&ms=' + encodeURIComponent(document.getElementById('input-message').value || 'Kirim pesan manis...') + '&fr=' + encodeURIComponent(document.getElementById('input-from').value || 'Dari Seseorang');
+        const shareUrl = window.location.origin + window.location.pathname + '#' + buildString;
+        document.getElementById('link-text').innerText = shareUrl;
+        document.getElementById('share-output').classList.remove('bq-hidden');
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(shareUrl).then(handleCopySuccess).catch(() => executeFallbackCopy(shareUrl)); } else { executeFallbackCopy(shareUrl); }
+    }
+
+    function executeFallbackCopy(text) {
+        const textArea = document.createElement("textarea"); textArea.value = text; textArea.style.position = "fixed"; textArea.style.opacity = "0"; document.body.appendChild(textArea); textArea.focus(); textArea.select();
+        try { document.execCommand('copy'); handleCopySuccess(); } catch (err) { console.error('Fallback copy gagal', err); }
+        document.body.removeChild(textArea);
+    }
+
+    function handleCopySuccess() { setTimeout(() => { const c = document.getElementById('bq-main-container'); if(c) c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' }); }, 200); }
+    function resetToHome() { window.location.href = window.location.origin + window.location.pathname; }
+
+    function checkReceiverMode() {
+        const hash = window.location.hash;
+        if(hash && hash.length > 3) {
+            const params = new URLSearchParams(hash.substring(1));
+            if(params.has('bq')) {
+                document.getElementById('creator-view').classList.add('bq-hidden');
+                document.querySelector('.bq-progress-bar').classList.add('bq-hidden');
+                document.getElementById('canvas-view').style.backgroundColor = (ASSET_BACKGROUNDS.find(x => x.id === params.get('bg')) || ASSET_BACKGROUNDS[0]).val;
+                renderPremiumBouquet('receiver-bouquet-img', params.get('bq'));
+                startPetalsEffect('receiver-petals', params.get('fx') || 'rose');
+                const paper = ASSET_PAPERS.find(x => x.id === params.get('pp')) || ASSET_PAPERS[0];
+                const card = document.getElementById('letter-card');
+                card.style.backgroundImage = 'none'; card.style.backgroundColor = paper.hex; card.style.color = paper.text;
+                document.getElementById('display-to').innerText = params.get('to') || '';
+                document.getElementById('display-from').innerText = params.get('fr') || '';
+                document.getElementById('receiver-view').classList.remove('bq-hidden');
+                const msg = params.get('ms') || ''; if(msg) triggerTypingEffect('display-msg', msg);
+            }
+        }
+    }
+
+    function unduhGambarbuket() {
+        const target = document.getElementById('capture-receiver-target');
+        window.scrollTo(0,0);
+        html2canvas(target, {
+            useCORS: true,
+            allowTaint: true,
+            scale: 3, 
+            dpi: 300, 
+            backgroundColor: null,
+            logging: false,
+            width: target.offsetWidth,
+            height: target.offsetHeight,
+            scrollX: 0,
+            scrollY: 0
+        }).then(canvas => {
+            let link = document.createElement('a');
+            link.download = 'DailyGift_Buket_Premium_HD.png';
+            link.href = canvas.toDataURL('image/png', 1.0); 
+            link.click();
+        });
+    }
+</script>
+</body>
+</html>
